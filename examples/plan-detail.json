@@ -1,0 +1,135 @@
+{
+ "size": [
+  832,
+  1216
+ ],
+ "steps": 8,
+ "seed": 101,
+ "fit_size": [
+  768,
+  1024
+ ],
+ "tests": {
+  "woman": "A close-up portrait photograph of a woman of thirty-five with brown hair, looking at the camera, in soft window light.",
+  "man": "A close-up portrait photograph of a man of sixty with grey stubble, looking at the camera, outdoors on an overcast day.",
+  "half": "A photograph of a woman of fifty in a green linen shirt standing in a kitchen, seen from the waist up.",
+  "fox": "A photograph of a red fox standing in a snowy pine forest."
+ },
+ "directions": {
+  "blur": {
+   "toward": "Shallow depth of field, the background blurred into soft bokeh.",
+   "away": "Deep focus, everything sharp from front to back.",
+   "text": false
+  },
+  "waxy": {
+   "toward": "Waxy airbrushed skin, plastic-smooth and poreless, heavily retouched, glossy rendered look.",
+   "away": "Natural unretouched skin with visible pores, fine lines and tiny hairs, raw photograph.",
+   "text": false
+  },
+  "smooth": {
+   "toward": "Smooth, soft, low-detail surfaces, denoised and airbrushed, no fine texture.",
+   "away": "Crisp micro-detail everywhere, fine surface texture and grain, tack sharp.",
+   "text": false
+  }
+ },
+ "arms": [
+  {
+   "name": "base"
+  },
+  {
+   "name": "blur image -0.25",
+   "direction": "blur",
+   "image": -0.25
+  },
+  {
+   "name": "blur image -0.5",
+   "direction": "blur",
+   "image": -0.5
+  },
+  {
+   "name": "blur image -0.75",
+   "direction": "blur",
+   "image": -0.75
+  },
+  {
+   "name": "blur image -1",
+   "direction": "blur",
+   "image": -1
+  },
+  {
+   "name": "smooth image -0.25",
+   "direction": "smooth",
+   "image": -0.25
+  },
+  {
+   "name": "smooth image -0.5",
+   "direction": "smooth",
+   "image": -0.5
+  },
+  {
+   "name": "smooth image -1",
+   "direction": "smooth",
+   "image": -1
+  },
+  {
+   "name": "smooth image +0.5",
+   "direction": "smooth",
+   "image": 0.5
+  },
+  {
+   "name": "waxy image -0.25",
+   "direction": "waxy",
+   "image": -0.25
+  },
+  {
+   "name": "waxy image -0.5",
+   "direction": "waxy",
+   "image": -0.5
+  },
+  {
+   "name": "blur image -1 late (sigma<0.6)",
+   "direction": "blur",
+   "image": -1,
+   "sigmas": [
+    0.6,
+    0
+   ]
+  },
+  {
+   "name": "smooth image -1 late (sigma<0.6)",
+   "direction": "smooth",
+   "image": -1,
+   "sigmas": [
+    0.6,
+    0
+   ]
+  },
+  {
+   "name": "smooth image -2 late (sigma<0.6)",
+   "direction": "smooth",
+   "image": -2,
+   "sigmas": [
+    0.6,
+    0
+   ]
+  },
+  {
+   "name": "smooth image -1 blocks 14-27",
+   "direction": "smooth",
+   "image": -1,
+   "blocks": [
+    14,
+    27
+   ]
+  },
+  {
+   "name": "smooth image -1 blocks 0-13",
+   "direction": "smooth",
+   "image": -1,
+   "blocks": [
+    0,
+    13
+   ]
+  }
+ ]
+}

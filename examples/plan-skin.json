@@ -1,0 +1,29 @@
+{
+ "size": [832, 1216], "steps": 8, "seed": 101, "fit_size": [768, 1024],
+ "directions": {
+  "waxy": {"toward": "Waxy airbrushed skin, plastic-smooth and poreless, heavily retouched, glossy rendered look.",
+           "away": "Natural unretouched skin with visible pores, fine lines and tiny hairs, raw photograph."},
+  "blur": {"toward": "Shallow depth of field, the background blurred into soft bokeh.",
+           "away": "Deep focus, everything sharp from front to back."}
+ },
+ "tests": {
+  "woman": "A close-up portrait photograph of a woman of thirty-five with brown hair, looking at the camera, in soft window light.",
+  "man": "A close-up portrait photograph of a man of sixty with grey stubble, looking at the camera, outdoors on an overcast day.",
+  "half": "A photograph of a woman of fifty in a green linen shirt standing in a kitchen, seen from the waist up.",
+  "fox": "A photograph of a red fox standing in a snowy pine forest."
+ },
+ "arms": [
+  {"name": "base"},
+  {"name": "waxy text -4", "direction": "waxy", "text": -4},
+  {"name": "waxy image -1", "direction": "waxy", "image": -1},
+  {"name": "waxy image -2", "direction": "waxy", "image": -2},
+  {"name": "waxy image -4", "direction": "waxy", "image": -4},
+  {"name": "waxy image +2", "direction": "waxy", "image": 2},
+  {"name": "waxy image -2 late (sigma<0.6)", "direction": "waxy", "image": -2, "sigmas": [0.6, 0.0]},
+  {"name": "waxy image -4 late (sigma<0.6)", "direction": "waxy", "image": -4, "sigmas": [0.6, 0.0]},
+  {"name": "waxy image -2 early (sigma>0.6)", "direction": "waxy", "image": -2, "sigmas": [1.0, 0.6]},
+  {"name": "waxy text -4 + image -2 late", "direction": "waxy", "text": -4, "image": -2, "sigmas": [0.6, 0.0]},
+  {"name": "blur image +2", "direction": "blur", "image": 2},
+  {"name": "blur image -2", "direction": "blur", "image": -2}
+ ]
+}

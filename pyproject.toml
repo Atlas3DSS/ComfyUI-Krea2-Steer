@@ -1,0 +1,13 @@
+[project]
+name = "comfyui-krea2-steer"
+description = "Steering vectors for Krea 2 in ComfyUI: move the model toward or away from a look at inference time, with no training."
+version = "0.1.0"
+license = { file = "LICENSE" }
+dependencies = []
+
+[tool.comfy]
+DisplayName = "Krea2 Steer"
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = ["tests"]

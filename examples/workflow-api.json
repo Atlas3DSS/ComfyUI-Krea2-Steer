@@ -1,0 +1,29 @@
+{
+ "unet": {"class_type": "UNETLoader", "inputs": {"unet_name": "krea2_turbo_bf16.safetensors", "weight_dtype": "default"}},
+ "clip": {"class_type": "CLIPLoader", "inputs": {"clip_name": "qwen3vl_4b_bf16.safetensors", "type": "krea2", "device": "default"}},
+ "vae": {"class_type": "VAELoader", "inputs": {"vae_name": "qwen_image_vae.safetensors"}},
+ "fit_text": {"class_type": "Krea2SteerFitText", "inputs": {
+  "model": ["unet", 0], "clip": ["clip", 0],
+  "toward": "Shallow depth of field, the background blurred into soft bokeh.",
+  "away": "Deep focus, everything sharp from front to back.",
+  "scenes": "A portrait of a woman in her thirties with short dark hair\nAn elderly man reading a newspaper on a park bench\nA golden retriever running across a meadow\nA bowl of ramen with a soft egg and spring onions\nA mountain lake at sunrise with pine trees\nA living room with a sofa, a rug and a floor lamp\nA red bicycle leaning against a brick wall\nA busy market street with fruit stalls",
+  "save_as": ""}},
+ "fit_image": {"class_type": "Krea2SteerFitImage", "inputs": {
+  "model": ["unet", 0], "clip": ["clip", 0], "steer": ["fit_text", 0],
+  "toward": "Shallow depth of field, the background blurred into soft bokeh.",
+  "away": "Deep focus, everything sharp from front to back.",
+  "scenes": "A portrait of a woman in her thirties with short dark hair\nAn elderly man reading a newspaper on a park bench\nA golden retriever running across a meadow\nA bowl of ramen with a soft egg and spring onions\nA mountain lake at sunrise with pine trees\nA living room with a sofa, a rug and a floor lamp\nA red bicycle leaning against a brick wall\nA busy market street with fruit stalls",
+  "width": 768, "height": 1024, "steps": 8, "sampler_name": "euler", "scheduler": "simple", "seed": 1, "save_as": "blur"}},
+ "apply": {"class_type": "Krea2SteerApply", "inputs": {
+  "model": ["unet", 0], "steer": ["fit_image", 0], "text_strength": 0, "image_strength": -0.5,
+  "first_block": 0, "last_block": 27, "start_sigma": 1.0, "end_sigma": 0.0}},
+ "text": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["clip", 0], "text": "A photograph of a red fox standing in a snowy pine forest."}},
+ "latent": {"class_type": "EmptySD3LatentImage", "inputs": {"width": 832, "height": 1216, "batch_size": 1}},
+ "noise": {"class_type": "RandomNoise", "inputs": {"noise_seed": 101}},
+ "sampler": {"class_type": "KSamplerSelect", "inputs": {"sampler_name": "euler"}},
+ "guider": {"class_type": "BasicGuider", "inputs": {"model": ["apply", 0], "conditioning": ["text", 0]}},
+ "sigmas": {"class_type": "BasicScheduler", "inputs": {"model": ["apply", 0], "scheduler": "simple", "steps": 8, "denoise": 1.0}},
+ "sample": {"class_type": "SamplerCustomAdvanced", "inputs": {"noise": ["noise", 0], "guider": ["guider", 0], "sampler": ["sampler", 0], "sigmas": ["sigmas", 0], "latent_image": ["latent", 0]}},
+ "decode": {"class_type": "VAEDecode", "inputs": {"samples": ["sample", 0], "vae": ["vae", 0]}},
+ "save": {"class_type": "SaveImage", "inputs": {"images": ["decode", 0], "filename_prefix": "krea2-steer/example"}}
+}
