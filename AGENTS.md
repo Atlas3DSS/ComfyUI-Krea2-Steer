@@ -25,7 +25,7 @@ to low, `info` (dict of plain values). The API does not fill defaults: send ever
 | `Krea2SteerFitImage` | the same plus `width`, `height`, `steps`, `sampler_name`, `scheduler`, `seed` | `steer` | `steer`, `report` |
 | `Krea2SteerFitPictures` | `model`, `clip`, `vae`, `toward` (IMAGE batch), `away` (IMAGE batch), `caption`, `steps`, `scheduler`, `seed`, `save_as` | `steer` | `steer`, `report` |
 | `Krea2SteerApply` | `model`, `steer`, `text_strength`, `image_strength`, `first_block`, `last_block` (0-27), `start_sigma`, `end_sigma` (1 = noise, 0 = done) | | `model` |
-| `Krea2SteerLoad` | `name` (file under `models/krea2_steer`, e.g. `lab/smooth.safetensors`) | | `steer`, `report` |
+| `Krea2SteerLoad` | `name` (file under `models/krea2_steer`, e.g. `krea2-turbo-detail.safetensors`) | | `steer`, `report` |
 | `Krea2SteerExportLoRA` | `steer`, `filename` (under `models/loras`) | | `path` |
 
 File format: safetensors with tensors `text`, `image`, `sigmas` and metadata key `krea2_steer` (JSON of `info`).

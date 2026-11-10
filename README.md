@@ -7,8 +7,8 @@ away. Negative strength works like a negative prompt, which Krea 2 Turbo does no
 
 ![Full-size crops: base against the detail direction](docs/detail-crops.jpg)
 
-Same prompt, same seed, Krea 2 Turbo at 1664x2432. The only change is one direction ("smooth vs crisp detail") at a
-small negative strength. The smooth, airbrushed skin of the base render gets its pores back.
+Same prompt, same seed, Krea 2 Turbo at 1664x2432. The only change is one direction ("detail") at a small
+strength. The smooth, airbrushed skin of the base render gets its pores back.
 
 ![The same renders, whole picture](docs/detail-whole.jpg)
 
@@ -36,25 +36,25 @@ No extra Python packages. Restart ComfyUI. The nodes are under **Krea2/steer**.
 ```mermaid
 flowchart LR
     U[Load Diffusion Model<br/>Krea 2 Turbo] --> A[Krea2 Steer Apply]
-    L[Krea2 Steer Load<br/>krea2-turbo-smooth] --> A
+    L[Krea2 Steer Load<br/>krea2-turbo-detail] --> A
     A --> G[your sampler / guider]
 ```
 
-- **Krea2 Steer Load**: pick `krea2-turbo-smooth.safetensors` (it ships with this pack).
+- **Krea2 Steer Load**: pick `krea2-turbo-detail.safetensors` (it ships with this pack).
 - **Krea2 Steer Apply**: put it between your model loader (after any LoRAs) and the sampler.
 
 **3. Set the strength**
 
-On **Krea2 Steer Apply** set `image_strength` to **-0.25** and leave everything else alone. Render. Compare with
+On **Krea2 Steer Apply** set `image_strength` to **0.25** and leave everything else alone. Render. Compare with
 `image_strength` 0 on the same seed.
 
-| `image_strength` with `krea2-turbo-smooth` | What you get |
+| `image_strength` with `krea2-turbo-detail` | What you get |
 | --- | --- |
-| +0.5 | smoother than normal |
+| -0.5 | smoother than normal |
 | 0 | the normal render |
-| -0.15 to -0.35 | more fine detail: pores, fabric weave, fur |
-| -0.5 | a lot more, darker, the face starts to change |
-| -1 | too far: dark and noisy |
+| +0.15 to +0.35 | more fine detail: pores, fabric weave, fur |
+| +0.5 | a lot more, darker, the face starts to change |
+| +1 | too far: dark and noisy |
 
 ![One direction, one slider](docs/strength-sweep.jpg)
 
@@ -143,14 +143,14 @@ prompt -> Qwen3-VL (12 hidden layers) -> txtfusion -> txtmlp -> text tokens (614
 
 ## Measured so far (Krea 2 Turbo)
 
-Fine-detail contrast of a face crop (higher = more pixel-scale texture), `krea2-turbo-smooth`, image part:
+Fine-detail contrast of a face crop (higher = more pixel-scale texture), `krea2-turbo-detail`, image part:
 
-| Strength | +0.5 | 0 (base) | -0.25 | -0.5 | -1 |
+| Strength | -0.5 | 0 (base) | +0.25 | +0.5 | +1 |
 | --- | --- | --- | --- | --- | --- |
 | woman, close-up, 832x1216 | 4.4 | 6.5 | 7.4 | 9.0 | 11.3 |
 | man, close-up, 832x1216 | 5.0 | 8.1 | 10.0 | 12.7 | 15.5 |
 
-At 1664x2432 (direction fitted at 768x1024): woman 5.8, 6.5, 6.9 and man 5.7, 7.5, 8.7 for base, -0.25, -0.35.
+At 1664x2432 (direction fitted at 768x1024): woman 5.8, 6.5, 6.9 and man 5.7, 7.5, 8.7 for base, +0.25, +0.35.
 The number rises with noise as well as with real texture, so always look at the crops.
 
 | Setting | Useful range | Past it |
@@ -191,7 +191,7 @@ Agents: read [AGENTS.md](AGENTS.md) for the exact node inputs and the file forma
 | --- | --- |
 | `steer.py` | all the maths and model hooks (imports only torch) |
 | `nodes.py` | the ComfyUI nodes |
-| `directions/` | ready-made directions for stock Krea 2 Turbo: `smooth` (negative = more detail), `blur` (negative = sharper) |
+| `directions/` | ready-made directions for stock Krea 2 Turbo: `detail` (positive = more fine detail, negative = smoother), `blur` (positive = softer background, negative = sharper) |
 | `tools/lab.py`, `examples/` | fixed-seed comparison sheets, test plans, one API workflow |
 | `tests/` | unit tests |
 
